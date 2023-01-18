@@ -2,37 +2,36 @@
 const {
   Model
 } = require('sequelize');
-const { threadId } = require('worker_threads');
 module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
+  class Comment extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Comment }) {
+    static associate({ Post, User }) {
       // define association here
+      this.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
       this.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-      this.hasMany(Comment, { foreignKey: 'postId', as: 'comments' });
     }
   }
-  Post.init({
-    title: {
-      type:DataTypes.STRING,
-      allowNull: false
-    },
+  Comment.init({
     content: {
-      type:DataTypes.STRING,
-      allowNull: false
-    },
+      type: DataTypes.STRING,
+    allowNull: false      
+    },  
     userId: {
-      type:DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }, 
+    postId: {
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'posts',
-    modelName: 'Post',
+    tableName: 'comments',
+    modelName: 'Comment',
   });
-  return Post;
+  return Comment;
 };
