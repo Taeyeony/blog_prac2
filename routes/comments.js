@@ -1,12 +1,13 @@
 const express = require('express');
-const Joi = require('joi');
+const authMiddleware = require('../middleware/auth')
+
 const router = express.Router();
-const { Comment, Post } = require('../models');
+const { Comment, Post, User } = require('../models');
 const { 
   commentCreateValidation, 
   commentUpdateValidation 
 } = require('../validations');
-const { route } = require('./auth');
+
 
 // 댓글 조회
 router.get('/', async (req, res) => {
@@ -32,14 +33,18 @@ router.get('/:postId', async (req, res) => {
 });
 
 // 댓글 작성
-router.post('/:postId', async (req, res) => {
+router.post('/:postId', authMiddleware, async (req, res) => {
+  const { currentUser } = res.locals;
+  const userId = currentUser.id;
+
   const { postId } = req.params;
+
   try {
-    const { content, userId } = await commentCreateValidation.validateAsync(req.body);
+    const { content } = await commentCreateValidation.validateAsync(req.body);
     const comment = await Comment.create({
       content,
-      userId,
-      postId
+      postId,
+      userId
     });
     res.json(comment);
   } catch (err) {
@@ -51,13 +56,19 @@ router.post('/:postId', async (req, res) => {
 });
 
 // 댓글 수정
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
+  const { currentUser } = res.locals;
+  const nickname = currentUser.nickname;
 
   try{
     const fieldsToUpdate = await commentUpdateValidation.validateAsync(req.body);
     const updatedComment = await Comment.update(fieldsToUpdate, {
       where: { id },
+      include: {
+        model: User,
+        as: nickname
+      }
     });
     res.json(updatedComment);
   } catch(err) {
@@ -69,11 +80,18 @@ router.patch('/:id', async (req, res) => {
 });
 
 // 댓글 삭제
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
+router.delete('/:id', authMiddleware, async (req, res) => {
+  const { currentUser } = res.locals;
+  const nickname = currentUser.nickname;
 
   try {
-    const deletedComment = await Comment.destroy({ where: { id } });
+    const { id } = req.params;
+    const deletedComment = await Comment.destroy({ where: { id },
+      include: {
+        model: User,
+        as: nickname
+      }
+    });
     res.json(deletedComment);
   } catch (err) {
     res.status(500).json({ message: err.message });

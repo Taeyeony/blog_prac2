@@ -21,45 +21,59 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "nickname": "gorae",
+  "password": "1234"
+}
+
+###
+
 POST http://localhost:3000/posts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDQyOTUyfQ.Pm8s-2iOoNNlFP2Ox-9WQBzsQINjKQDcR5jbLFV6agE
 
 {
-  "title": "cat",
-  "content": "is cute",
-  "userId": 1
+  "title": "cats",
+  "content": "are fat"
 }
 ###
 
-PATCH  http://localhost:3000/posts/1
+PATCH  http://localhost:3000/posts/6
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDQyOTUyfQ.Pm8s-2iOoNNlFP2Ox-9WQBzsQINjKQDcR5jbLFV6agE
 
 {
-  "content": "is perfect"
+  "content": "are best"
 }
 ###
 
-DELETE http://localhost:3000/posts/1
+DELETE http://localhost:3000/posts/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDQyOTUyfQ.Pm8s-2iOoNNlFP2Ox-9WQBzsQINjKQDcR5jbLFV6agE
 
 ###
 
-POST http://localhost:3000/comments/2
+POST http://localhost:3000/comments/5
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDUwMTA4fQ.q9VyKjYsvCUnfDGXdswM6kN6ZNXRqv0GpzIcaD0rGdQ
 
 {
-  "content": "I love cat",
-  "userId": 1
+  "content": "I like cat"
 }
 
 ###
 
 PATCH  http://localhost:3000/comments/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDUwMTA4fQ.q9VyKjYsvCUnfDGXdswM6kN6ZNXRqv0GpzIcaD0rGdQ
 
 {
-  "content": "cat the boss"
+  "content": "lovely cat"
 }
 
 ###
 
-DELETE http://localhost:3000/comments/3
+DELETE http://localhost:3000/comments/19
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDUwMTA4fQ.q9VyKjYsvCUnfDGXdswM6kN6ZNXRqv0GpzIcaD0rGdQ

@@ -1,4 +1,5 @@
 const express = require('express');
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 const { Post, User } = require('../models');
@@ -39,9 +40,11 @@ router.get('/:id', async (req, res) => {
 
 
 // 게시글 생성
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
+  const { currentUser } = res.locals;
+  const userId = currentUser.id;
   try {
-    const { title, content, userId } = await postCreateValidation.validateAsync(
+    const { title, content } = await postCreateValidation.validateAsync(
       req.body
     );
     const post = await Post.create({
@@ -58,8 +61,10 @@ router.post('/', async (req, res) => {
 })
 
 // 게시글 수정
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
+  const { currentUser } = res.locals;
+  const nickname = currentUser.nickname;
 
   try {
     const fieldsToBeUdated = await postUpdateValidation.validateAsync(
@@ -67,6 +72,10 @@ router.patch('/:id', async (req, res) => {
     );
   const updatedPost = await Post.update(fieldsToBeUdated, {
     where: { id },
+    include: {
+      model: User, 
+      as: nickname
+    }
   });
   res.json(updatedPost);
   }catch(err) {
@@ -78,11 +87,18 @@ router.patch('/:id', async (req, res) => {
 });
 
 // 게시글 삭제
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
+  const { currentUser } = res.locals;
+  const nickname = currentUser.nickname;
   try {
     const { id } = req.params;
-    const post = await Post.destroy({ where: { id } });
-    res.json(post);
+    const deletePost = await Post.destroy({ where: { id },
+      include: {
+        model: User, 
+        as: nickname
+      }
+    });
+    res.json(deletePost);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }  
