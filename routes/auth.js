@@ -46,7 +46,8 @@ router.post('/login', async (req, res) => {
   const { nickname, password } = req.body;
 
   try {
-    const user = await User.findOne({ nickname });
+    const user = await User.findOne({ where: { nickname } });
+    console.log(user)
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!user || !isPasswordCorrect) {

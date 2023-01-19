@@ -1,8 +1,9 @@
 const express = require('express');
+
 const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
-const { Post, User } = require('../models');
+const { Post, User, Like, Sequelize } = require('../models');
 const { 
   postCreateValidation, 
   postUpdateValidation, 
@@ -12,14 +13,43 @@ const {
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.findAll({
-      include: ({ model: User, as: 'user', attributes: ['nickname'] }),
-      attributes: { exclude: ['userId'] },
+      // attributes: { exclude: ['userId'] },
+      attributes: [
+        'id',
+        'title',
+        'content',
+        [Sequelize.fn('count', Sequelize.col('likes.id')), 'numOfLikes'], // 좋아요 갯수 같이 표출
+      ],
+      include: [
+        ({ model: User, as: 'user', attributes: ['nickname'] }),
+        {
+          model: Like,
+          as: 'likes',
+          attributes: [],
+        },
+      ],     
+      group: ['post.id'],
+      order: [[Sequelize.literal('numOfLikes'), 'DESC']],  // 좋아요가 많은 순으로 정렬 (반대는 'ASC')   
     });
     res.json(posts); 
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 })
+
+// 내가 좋아요한 게시글 조회
+router.get('/mylike', authMiddleware, async(_, res) => {
+  const { 
+    currentUser: { id: userId }, 
+  } = res.locals;
+
+  const like = await Like.findAll({
+    where: {
+      userId,
+    }
+  });
+  res.json(like);
+});
 
 // 게시글 상세 조회
 router.get('/:id', async (req, res) => {
@@ -99,6 +129,43 @@ router.delete('/:id', authMiddleware, async (req, res) => {
       }
     });
     res.json(deletePost);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }  
+});
+
+// 게시글 좋아요, 취소
+router.post('/:id/like', authMiddleware, async (req, res) => {
+  const { id: postId } = req.params;
+  const { 
+    currentUser: { id: userId }, 
+  } = res.locals;
+
+  try {
+    const like = await Like.findOne({
+      where: {
+        userId,
+        postId,
+      },
+    });
+
+    const isLikedAlready = !!like;
+
+    if(isLikedAlready) {
+      const deletedLike = await Like.destroy({
+        where: {
+          userId,
+          postId,
+        },
+      });
+      res.json(deletedLike);
+    } else {
+      const postedLike = await Like.create({
+        userId,
+        postId
+      });
+      res.json(postedLike);
+    }    
   } catch (err) {
     res.status(500).json({ message: err.message });
   }  
