@@ -1,18 +1,12 @@
 const express = require('express');
 
-const authRouter = require('./routes/auth');
-const postRouter = require('./routes/posts');
-const commentRouter = require('./routes/comments');
+const router = require('./routes')
 const { sequelize } = require('./models');
-
 
 const app = express();
 
-app.use(express.json());
-
-app.use(authRouter);
-app.use('/posts', postRouter);
-app.use('/comments', commentRouter);
+app.use(express.json()); // body로 들어오는 데이터를 해석하는 middleware
+app.use('/api', router); // api 주소로 들어 온 요청들을 router로 보냄
 
 app.listen(3000, async () => {
   console.log('server started!');

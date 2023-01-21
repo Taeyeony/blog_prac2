@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET_KEY } = process.env;
+// const { JWT_SECRET_KEY } = process.env;
 
 const authMiddleware = async (req, res, next) => {
   const { authorization = '' } = req.headers;
@@ -16,8 +16,10 @@ const authMiddleware = async (req, res, next) => {
   }
 
   try {
-    const { nickname } = jwt.verify(token, JWT_SECRET_KEY);
+    const { nickname } = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    console.log(nickname)
     const user = await User.findOne({ where: { nickname } });
+    console.log(user)
     
     res.locals.currentUser = user;
     next();
