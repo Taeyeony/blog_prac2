@@ -30,7 +30,7 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "nickname": "gorae",
+  "nickname": "kitten",
   "password": "1234"
 }
 
@@ -60,15 +60,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6Imdvc
 
 ###
 
-POST http://localhost:3000/posts/5/like
+POST http://localhost:3000/api/likes/7
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImtpdHRlbiIsImlhdCI6MTY3NDEzMjAxMX0.7U4Uajclq7D6VRQgOgxXuWnaqAFxXKMZwpLwCDoCVlg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImtpdHRlbiIsImlhdCI6MTY3NDM2MjgxMX0.5bphiCFkPD097zw_WT34T36_fqTyTn-jnXBuo8Uwb_I
 
 
 
 ###
 
-POST http://localhost:3000/comments/5
+POST http://localhost:3000/comments/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDUwMTA4fQ.q9VyKjYsvCUnfDGXdswM6kN6ZNXRqv0GpzIcaD0rGdQ
 
