@@ -10,7 +10,7 @@ const router = express.Router();
 router.use('/posts', postRouter);
 router.use('/likes', likeRouter);
 router.use('/comments', commentRouter);
-router.use('/auth', authRouter);
+router.use('/users', authRouter);
 
 
 

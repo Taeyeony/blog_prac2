@@ -5,9 +5,10 @@ const {
   postUpdateValidation, 
 } = require('../validations');
 
-class PostController{
+class PostController {
   postService = new PostService();
 
+// 게시글 조회
   showPost = async (req, res) => {
     try { 
       const posts = await this.postService.showPost();
@@ -16,6 +17,7 @@ class PostController{
       res.status(500).json({ message: err.message });
     }
   };
+// 게시글 상세 조회
   showOnePost = async (req, res) => {
     const { id } = req.params;
     try {
@@ -25,6 +27,7 @@ class PostController{
       res.status(500).json({ message: err.message });
     }    
   };
+// 게시글 작성
   createPost = async (req, res) => {
     const { currentUser } = res.locals;
     const userId = currentUser.id;
@@ -38,6 +41,7 @@ class PostController{
       res.status(500).json({ message: err.message });
     }
   };
+// 게시글 수정  
   updatePost = async (req, res) => {
     const { id } = req.params;
     const { currentUser } = res.locals;
@@ -56,6 +60,7 @@ class PostController{
       res.status(500).json({ message: err.message });
     }   
   };
+// 게시글 삭제  
   deletePost = async (req, res) => { 
     const { id } = req.params;
     const { currentUser } = res.locals;

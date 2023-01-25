@@ -12,51 +12,5 @@ router.patch('/:id', authMiddleware, postController.updatePost);
 router.delete('/:id', authMiddleware, postController.deletePost);
 
 
-
-// const { Post, User, Like, Sequelize } = require('../models');
-// const { 
-//   postCreateValidation, 
-//   postUpdateValidation, 
-// } = require('../validations');
-
-
-// // 게시글 좋아요, 취소
-// router.post('/:id/like', authMiddleware, async (req, res) => {
-//   const { id: postId } = req.params;
-//   const { 
-//     currentUser: { id: userId }, 
-//   } = res.locals;
-
-//   try {
-//     const like = await Like.findOne({
-//       where: {
-//         userId,
-//         postId,
-//       },
-//     });
-
-//     const isLikedAlready = !!like;
-
-//     if(isLikedAlready) {
-//       const deletedLike = await Like.destroy({
-//         where: {
-//           userId,
-//           postId,
-//         },
-//       });
-//       res.json(deletedLike);
-//     } else {
-//       const postedLike = await Like.create({
-//         userId,
-//         postId
-//       });
-//       res.json(postedLike);
-//     }    
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }  
-// });
-
-
 module.exports = router;
 

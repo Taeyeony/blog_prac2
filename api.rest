@@ -1,4 +1,4 @@
-GET http://localhost:3000/users
+GET http://localhost:3000/api/users
 
 ###
 GET http://localhost:3000/api/posts/
@@ -8,29 +8,29 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6Imtpd
 
 
 ###
-GET http://localhost:3000/comments/
+GET http://localhost:3000/api/comments
 
 ###
 GET http://localhost:3000/posts/
 
 
 ###
-POST http://localhost:3000/signup
+POST http://localhost:3000/api/users/signup
 Content-Type: application/json
 
 {
-  "nickname": "kitten",
+  "nickname": "apple",
   "password": "1234",
   "confirm": "1234"
 }
 
 ###
 
-POST http://localhost:3000/api/auth/login
+POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "kitten",
+  "nickname": "gorae",
   "password": "1234"
 }
 
@@ -68,25 +68,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6Imtpd
 
 ###
 
-POST http://localhost:3000/comments/
+POST http://localhost:3000/api/comments/7
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDUwMTA4fQ.q9VyKjYsvCUnfDGXdswM6kN6ZNXRqv0GpzIcaD0rGdQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MzgyMTMyfQ.1w8dhMc3F3BEsLo5drAPOiOuNBmRzFX5MT6vTDQD72M
 
 {
-  "content": "I like cat"
+  "content": "고양이 짜릿해!"
 }
 
 ###
 
-PATCH  http://localhost:3000/comments/1
+PATCH  http://localhost:3000/api/comments/22
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDUwMTA4fQ.q9VyKjYsvCUnfDGXdswM6kN6ZNXRqv0GpzIcaD0rGdQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MzgyMTMyfQ.1w8dhMc3F3BEsLo5drAPOiOuNBmRzFX5MT6vTDQD72M
 
 {
-  "content": "lovely cat"
+  "content": "고양이 짱짱 귀여워 으악!!!!"
 }
 
 ###
 
-DELETE http://localhost:3000/comments/19
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MDUwMTA4fQ.q9VyKjYsvCUnfDGXdswM6kN6ZNXRqv0GpzIcaD0rGdQ
+DELETE http://localhost:3000/api/comments/22
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImdvcmFlIiwiaWF0IjoxNjc0MzgyMTMyfQ.1w8dhMc3F3BEsLo5drAPOiOuNBmRzFX5MT6vTDQD72M
