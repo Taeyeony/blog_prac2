@@ -42,8 +42,19 @@ class AuthController {
       res.status(500).json({ message: err.message });
     }
   };
+// 계정 삭제
+  deleteUser = async (req, res) => {
+    const { currentUser } = res.locals;
+    const nickname = currentUser.nickname;
+    try {
+      await this.authService.deleteUser( nickname );
+      res.json({ message: '정상적으로 삭제되었습니다.' });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
+}  
 
-}
 
 
 

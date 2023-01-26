@@ -1,6 +1,10 @@
 GET http://localhost:3000/api/users
 
 ###
+DELETE  http://localhost:3000/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImFwcGxlIiwiaWF0IjoxNjc0Njk5Mjc3fQ.pQDlTVRYplGRreGHzvwv9nHOjWzsNNMIBTS5HtFUkFs
+
+###
 GET http://localhost:3000/api/posts/
 ###
 GET http://localhost:3000/api/likes
@@ -30,7 +34,7 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "nickname": "gorae",
+  "nickname": "apple",
   "password": "1234"
 }
 

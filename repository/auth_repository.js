@@ -26,6 +26,11 @@ class AuthRepository {
     return user;
   };
 
+  deleteUser = async ( nickname ) => {
+    const deletedUser = await User.destroy({ where: { nickname } });
+    return deletedUser;
+  };
+
 }
 
 

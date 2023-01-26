@@ -23,7 +23,12 @@ class AuthService {
       return res.status(400).json({ message: '이메일 또는 비밀번호가 틀렸습니다.' });
     }
     return        
-  }
+  };
+
+  deleteUser = async ( nickname ) => {
+    const deletedUser = await this.authRepository.deleteUser( nickname );
+    return deletedUser;
+  };
 
 
 }
